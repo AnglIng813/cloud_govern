@@ -14,7 +14,6 @@ public class KubernetesServiceImpl implements KubernetesService {
 
     @Override
     public PodList getPodList() {
-       // KubernetesClientUtils.getK8sClientWithoutCert().li
         KubernetesClientUtils client = new KubernetesClientUtils();
         return  client.getK8sClientWithoutCert().pods().inNamespace("admin").list();
     }

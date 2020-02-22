@@ -69,7 +69,7 @@ public class KubernetesClientUtils extends KubernetesClientConfig{
      * @param path
      * @return
      */
-    private static String enCodeWithBase64(String path) {
+    private String enCodeWithBase64(String path) {
         String ret = "";
         try {
             String s = IOUtils.toString(new FileInputStream(new File(path)));

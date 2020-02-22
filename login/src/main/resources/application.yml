@@ -34,10 +34,10 @@ mybatis:
 
 ## swagger
 apis:
-  title: govern-core接口文档
-  description: govern-core相关的所有接口，可在线调试。
+  title: govern-login接口文档
+  description: govern-login相关的所有接口，可在线调试。
   version: 1.0
-  packageName: com.casic.cloud.hyperloop.core
+  packageName: com.casic.cloud.hyperloop.login
 
 ## ExecutePool
 threadPool:

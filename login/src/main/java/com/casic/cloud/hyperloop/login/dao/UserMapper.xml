@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.casic.cloud.hyperloop.login.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.casic.cloud.hyperloop.login.model.domain.User" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="show_name" property="showName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="auth_id" property="authId" jdbcType="BIGINT" />
+    <result column="login_id" property="loginId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="login_status" property="loginStatus" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="lastLogin_date" property="lastloginDate" jdbcType="TIMESTAMP" />
+    <result column="sign_id" property="signId" jdbcType="VARCHAR" />
+    <result column="auth_ids" property="authIds" jdbcType="VARCHAR" />
+    <result column="department_admin" property="departmentAdmin" jdbcType="BIT" />
+    <result column="login_failure_times" property="loginFailureTimes" jdbcType="INTEGER" />
+    <result column="reset_pwd_date" property="resetPwdDate" jdbcType="TIMESTAMP" />
+    <result column="frozen_times" property="frozenTimes" jdbcType="VARCHAR" />
+    <result column="frozen_date" property="frozenDate" jdbcType="TIMESTAMP" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, show_name, password, department_id, department_name, auth_id, 
+    login_id, role_name, phone, telephone, email, login_status, status, create_date, 
+    modify_date, lastLogin_date, sign_id, auth_ids, department_admin, login_failure_times, 
+    reset_pwd_date, frozen_times, frozen_date, namespace
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+    insert into user (user_id, user_name, show_name, 
+      password, department_id, department_name, 
+      auth_id, login_id, role_name, 
+      phone, telephone, email, 
+      login_status, status, create_date, 
+      modify_date, lastLogin_date, sign_id, 
+      auth_ids, department_admin, login_failure_times, 
+      reset_pwd_date, frozen_times, frozen_date, 
+      namespace)
+    values (#{userId,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{showName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{departmentId,jdbcType=BIGINT}, #{departmentName,jdbcType=VARCHAR}, 
+      #{authId,jdbcType=BIGINT}, #{loginId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{loginStatus,jdbcType=BIGINT}, #{status,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{modifyDate,jdbcType=TIMESTAMP}, #{lastloginDate,jdbcType=TIMESTAMP}, #{signId,jdbcType=VARCHAR}, 
+      #{authIds,jdbcType=VARCHAR}, #{departmentAdmin,jdbcType=BIT}, #{loginFailureTimes,jdbcType=INTEGER}, 
+      #{resetPwdDate,jdbcType=TIMESTAMP}, #{frozenTimes,jdbcType=VARCHAR}, #{frozenDate,jdbcType=TIMESTAMP}, 
+      #{namespace,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="showName != null" >
+        show_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="departmentId != null" >
+        department_id,
+      </if>
+      <if test="departmentName != null" >
+        department_name,
+      </if>
+      <if test="authId != null" >
+        auth_id,
+      </if>
+      <if test="loginId != null" >
+        login_id,
+      </if>
+      <if test="roleName != null" >
+        role_name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="loginStatus != null" >
+        login_status,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+      <if test="lastloginDate != null" >
+        lastLogin_date,
+      </if>
+      <if test="signId != null" >
+        sign_id,
+      </if>
+      <if test="authIds != null" >
+        auth_ids,
+      </if>
+      <if test="departmentAdmin != null" >
+        department_admin,
+      </if>
+      <if test="loginFailureTimes != null" >
+        login_failure_times,
+      </if>
+      <if test="resetPwdDate != null" >
+        reset_pwd_date,
+      </if>
+      <if test="frozenTimes != null" >
+        frozen_times,
+      </if>
+      <if test="frozenDate != null" >
+        frozen_date,
+      </if>
+      <if test="namespace != null" >
+        namespace,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="showName != null" >
+        #{showName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="authId != null" >
+        #{authId,jdbcType=BIGINT},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginStatus != null" >
+        #{loginStatus,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginDate != null" >
+        #{lastloginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signId != null" >
+        #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="authIds != null" >
+        #{authIds,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentAdmin != null" >
+        #{departmentAdmin,jdbcType=BIT},
+      </if>
+      <if test="loginFailureTimes != null" >
+        #{loginFailureTimes,jdbcType=INTEGER},
+      </if>
+      <if test="resetPwdDate != null" >
+        #{resetPwdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenTimes != null" >
+        #{frozenTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenDate != null" >
+        #{frozenDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="namespace != null" >
+        #{namespace,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+    update user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="showName != null" >
+        show_name = #{showName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentId != null" >
+        department_id = #{departmentId,jdbcType=BIGINT},
+      </if>
+      <if test="departmentName != null" >
+        department_name = #{departmentName,jdbcType=VARCHAR},
+      </if>
+      <if test="authId != null" >
+        auth_id = #{authId,jdbcType=BIGINT},
+      </if>
+      <if test="loginId != null" >
+        login_id = #{loginId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null" >
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="loginStatus != null" >
+        login_status = #{loginStatus,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastloginDate != null" >
+        lastLogin_date = #{lastloginDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="signId != null" >
+        sign_id = #{signId,jdbcType=VARCHAR},
+      </if>
+      <if test="authIds != null" >
+        auth_ids = #{authIds,jdbcType=VARCHAR},
+      </if>
+      <if test="departmentAdmin != null" >
+        department_admin = #{departmentAdmin,jdbcType=BIT},
+      </if>
+      <if test="loginFailureTimes != null" >
+        login_failure_times = #{loginFailureTimes,jdbcType=INTEGER},
+      </if>
+      <if test="resetPwdDate != null" >
+        reset_pwd_date = #{resetPwdDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="frozenTimes != null" >
+        frozen_times = #{frozenTimes,jdbcType=VARCHAR},
+      </if>
+      <if test="frozenDate != null" >
+        frozen_date = #{frozenDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="namespace != null" >
+        namespace = #{namespace,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      show_name = #{showName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      department_id = #{departmentId,jdbcType=BIGINT},
+      department_name = #{departmentName,jdbcType=VARCHAR},
+      auth_id = #{authId,jdbcType=BIGINT},
+      login_id = #{loginId,jdbcType=BIGINT},
+      role_name = #{roleName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      login_status = #{loginStatus,jdbcType=BIGINT},
+      status = #{status,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      lastLogin_date = #{lastloginDate,jdbcType=TIMESTAMP},
+      sign_id = #{signId,jdbcType=VARCHAR},
+      auth_ids = #{authIds,jdbcType=VARCHAR},
+      department_admin = #{departmentAdmin,jdbcType=BIT},
+      login_failure_times = #{loginFailureTimes,jdbcType=INTEGER},
+      reset_pwd_date = #{resetPwdDate,jdbcType=TIMESTAMP},
+      frozen_times = #{frozenTimes,jdbcType=VARCHAR},
+      frozen_date = #{frozenDate,jdbcType=TIMESTAMP},
+      namespace = #{namespace,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="userId != null and userId != ''" >user_id = #{userId,jdbcType=BIGINT}</if>
+      <if test="userName != null and userName != ''" >and user_name = #{userName,jdbcType=VARCHAR}</if>
+    </where>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+</mapper>

@@ -1,0 +1,47 @@
+# Spring Profiles Active
+spring.profiles.active: dev
+
+server:
+  port: 9080
+  servlet:
+    context-path: /core
+
+## pageHelper分页插件配置
+## mybatis paging-plug-in :pagehelper
+pagehelper:
+  #方言，4.0.0以后版本可以不设置该参数
+  offset-as-page-num: true
+  #该参数默认为false
+  #设置为true时，使用RowBounds分页会进行count查询
+  row-bounds-with-count: true
+  #设置为true时，如果pageSize=0或者RowBounds.limit = 0就会查询出全部的结果
+  #（相当于没有执行分页查询，但是返回结果仍然是Page类型）
+  page-size-zero: true
+  #3.3.0版本可用 - 分页参数合理化，默认false禁用
+  #启用合理化时，如果pageNum<1会查询第一页，如果pageNum>pages会查询最后一页
+  #禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  reasonable: true
+  #支持通过Mapper接口参数来传递分页参数
+  support-methods-arguments: true
+  auto-dialect: mysql
+  params: count=countSql
+
+## Mybatis 配置
+mybatis:
+  configuration:
+   #解决返回map时，如果字段值为空，则key被过滤的问题
+    call-setters-on-nulls: true
+
+## swagger
+apis:
+  title: govern-core接口文档
+  description: govern-core相关的所有接口，可在线调试。
+  version: 1.0
+  packageName: com.casic.cloud.hyperloop.core
+
+## ExecutePool
+threadPool:
+  core-pool-size: 10
+  max-pool-size: 20
+  queue-capacity: 1000
+  keep-alive-seconds: 300

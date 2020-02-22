@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.2.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <groupId>com.casic.cloud.hyperloop</groupId>
+    <artifactId>cloud_govern</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>common</module>
+        <module>core</module>
+        <module>login</module>
+        <module>service-api</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <!--版本号-->
+        <govern-common>0.0.1-SNAPSHOT</govern-common>
+        <govern-core>0.0.1-SNAPSHOT</govern-core>
+        <govern-login>0.0.1-SNAPSHOT</govern-login>
+        <govern-service-api>0.0.1-SNAPSHOT</govern-service-api>
+
+
+        <fastjson.version>1.2.51</fastjson.version>
+        <swagger2.version>2.8.0</swagger2.version>
+        <commons-io.version>2.4</commons-io.version>
+        <pagehelper.version>1.2.12</pagehelper.version>
+        <page-autoconfig.version>1.2.3</page-autoconfig.version>
+        <bcprov-jdk15on.version>1.62</bcprov-jdk15on.version>
+        <jackson-dataformat-yaml.version>2.7.4</jackson-dataformat-yaml.version>
+        <uasparser.version>0.6.1</uasparser.version>
+        <jregex.version>1.2_01</jregex.version>
+        <jxl.version>2.6.12</jxl.version>
+        <mybatis-spring-boot>1.3.2</mybatis-spring-boot>
+        <mysql-connector>5.1.39</mysql-connector>
+        <druid.version>1.0.14</druid.version>
+        <okhttp3.version>4.3.0</okhttp3.version>
+        <fabric.version>4.6.4</fabric.version>
+
+    </properties>
+
+    <dependencies>
+        <!-- commons-lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <!--  fastjson -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
+        </dependency>
+        <!-- lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+    </dependencies>
+
+
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>profiles/**</exclude>
+                </excludes>
+            </resource>
+        </resources>
+    </build>
+
+</project>

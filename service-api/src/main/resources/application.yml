@@ -1,2 +1,7 @@
 # Spring Profiles Active
 spring.profiles.active: dev
+
+server:
+  port: 8888
+  servlet:
+    context-path: /service-api

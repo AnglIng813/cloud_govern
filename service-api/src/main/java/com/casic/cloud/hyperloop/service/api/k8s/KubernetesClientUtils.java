@@ -18,18 +18,13 @@ import java.util.Base64;
  * @Date: 2020/01/19 09:13
  * @version: V1.0
  */
-public class KubernetesClientUtils {
+public class KubernetesClientUtils extends KubernetesClientConfig{
 
-    @Value("${kubernetes.kubernetesUrl}")
-    private static String kubernetesUrl;
-    @Value("${kubernetes.certPath}")
-    private static String certPath;
-
-    public static KubernetesClient getK8sClientWithCert() {
+    public KubernetesClient getK8sClientWithCert() {
         String caCertFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + "/kubernetes.pem";
         String clientCertFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + "/client.pem";
         String clientKeyFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + "/client.key.pem";
-        Config config = new ConfigBuilder().withMasterUrl(kubernetesUrl)
+        Config config = new ConfigBuilder().withMasterUrl(super.kubernetesUrl)
                 .withTrustCerts(true)
                 .withCaCertData(enCodeWithBase64(caCertFile))
                 .withClientCertData(enCodeWithBase64(clientCertFile))
@@ -43,11 +38,11 @@ public class KubernetesClientUtils {
         return new DefaultKubernetesClient(config);
     }
 
-    public static KubernetesClient getK8sClientWithCert(String caCertFileURI, String clientCertFileURI, String clientKeyFileURI) {
+    public KubernetesClient getK8sClientWithCert(String caCertFileURI, String clientCertFileURI, String clientKeyFileURI) {
         String caCertFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + caCertFileURI;
         String clientCertFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + clientCertFileURI;
         String clientKeyFile = Thread.currentThread().getContextClassLoader().getResource("").getPath() + certPath + clientKeyFileURI;
-        Config config = new ConfigBuilder().withMasterUrl(kubernetesUrl)
+        Config config = new ConfigBuilder().withMasterUrl(super.kubernetesUrl)
                 .withTrustCerts(true)
                 .withCaCertData(enCodeWithBase64(caCertFile))
                 .withClientCertData(enCodeWithBase64(clientCertFile))
@@ -61,8 +56,8 @@ public class KubernetesClientUtils {
         return new DefaultKubernetesClient(config);
     }
 
-    public static KubernetesClient getK8sClientWithoutCert() {
-        Config config = new ConfigBuilder().withMasterUrl(kubernetesUrl).build();
+    public KubernetesClient getK8sClientWithoutCert() {
+        Config config = new ConfigBuilder().withMasterUrl(super.kubernetesUrl).build();
         return new DefaultKubernetesClient(config);
     }
 

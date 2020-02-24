@@ -31,7 +31,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
-@Api(tags = {"LoginController"}, description = "登录相关接口")
+@Api(tags = {"LoginController"}, value = "登录相关接口")
 public class LoginController {
 
     @Autowired

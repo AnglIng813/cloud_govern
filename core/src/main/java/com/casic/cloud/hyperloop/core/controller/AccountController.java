@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Slf4j
 @RestController
-@Api(tags = {"AccountController"}, description = "用户相关接口")
+@Api(tags = {"AccountController"}, value = "用户相关接口")
 public class AccountController {
 
     /***

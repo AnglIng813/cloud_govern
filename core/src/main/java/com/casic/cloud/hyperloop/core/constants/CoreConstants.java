@@ -7,5 +7,6 @@ package com.casic.cloud.hyperloop.core.constants;
  */
 public class CoreConstants {
 
+    public static final String REQUEST_ATTR_USERID = "userId";
 
 }

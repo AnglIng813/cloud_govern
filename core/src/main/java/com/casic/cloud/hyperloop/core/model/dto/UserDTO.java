@@ -1,13 +1,20 @@
-package com.casic.cloud.hyperloop.login.model.result;
+package com.casic.cloud.hyperloop.core.model.dto;
 
-import com.casic.cloud.hyperloop.common.model.result.BaseRes;
-import io.swagger.annotations.ApiModel;
+import com.casic.cloud.hyperloop.common.model.dto.BaseDTO;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
+/**
+ * @Description:
+ * @Author: AnglIng
+ * @Date: 2020/2/25 15:42
+ * @version: V1.0
+ */
+
 @Data
-@ApiModel
-public class UserRes extends BaseRes {
+public class UserDTO extends BaseDTO {
 
     @ApiModelProperty(value = "用户ID")
     private Long userId;
@@ -80,5 +87,4 @@ public class UserRes extends BaseRes {
 
     @ApiModelProperty(value = "租户命名空间")
     private String namespace;
-
 }

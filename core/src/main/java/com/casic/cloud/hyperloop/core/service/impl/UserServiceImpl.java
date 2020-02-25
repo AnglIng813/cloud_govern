@@ -8,12 +8,14 @@ import com.casic.cloud.hyperloop.core.model.domain.User;
 import com.casic.cloud.hyperloop.core.model.dto.UserDTO;
 import com.casic.cloud.hyperloop.core.model.result.UserRes;
 import com.casic.cloud.hyperloop.core.service.UserService;
+import com.github.pagehelper.PageHelper;
 import com.sun.tools.javac.util.Convert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Description:
@@ -33,12 +35,6 @@ public class UserServiceImpl implements UserService {
     public UserRes selectByCondition(UserDTO dto) {
         //拷贝内容
         User user = ConvertBeanUtils.converBean2Bean(dto, User.class);
-        user.setCreateDate(this.convert2Time(dto.getCreateDate()));
-        user.setModifyDate(this.convert2Time(dto.getModifyDate()));
-        user.setFrozenDate(this.convert2Time(dto.getFrozenDate()));
-        user.setResetPwdDate(this.convert2Time(dto.getResetPwdDate()));
-        user.setLastloginDate(this.convert2Time(dto.getLastloginDate()));
-
         UserRes userRes = null;
         try {
             userRes = userMapper.selectByCondition(user);
@@ -50,6 +46,28 @@ public class UserServiceImpl implements UserService {
 
         return userRes;
     }
+
+    @Override
+    public List<UserRes> selectUserListByCondition(UserDTO dto) {
+        //设置分页
+        Integer pageNum = dto.getPageNum() == null ? 1 : dto.getPageNum();
+        Integer pageSize = dto.getPageSize() == null ? 20 : dto.getPageSize();
+        PageHelper.startPage(pageNum, pageSize);
+
+        //拷贝内容
+        User user = ConvertBeanUtils.converBean2Bean(dto, User.class);
+        List<UserRes> resList = null;
+        try {
+            resList = userMapper.selectUserListByCondition(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("【根据条件查询user列表】失败,dto={}", dto);
+            throw new CloudApiServerException(ApiErrorCode.query_failure);
+        }
+
+        return resList;
+    }
+
 
     private Date convert2Time(Long createDate) {
         return new Date(createDate);

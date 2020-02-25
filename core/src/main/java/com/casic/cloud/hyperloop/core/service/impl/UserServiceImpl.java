@@ -13,6 +13,7 @@ import com.sun.tools.javac.util.Convert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    @Transactional(readOnly = true)
     public UserRes selectByCondition(UserDTO dto) {
         //拷贝内容
         User user = ConvertBeanUtils.converBean2Bean(dto, User.class);
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService {
             userRes = userMapper.selectByCondition(user);
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("【根据条件查询user】失败,dto={}", dto);
+            log.error("【根据条件查询user信息】失败,userId={},userName={}", dto.getUserId(), dto.getUserName());
             throw new CloudApiServerException(ApiErrorCode.query_failure);
         }
 
@@ -48,6 +50,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserRes> selectUserListByCondition(UserDTO dto) {
         //设置分页
         Integer pageNum = dto.getPageNum() == null ? 1 : dto.getPageNum();
@@ -56,12 +59,16 @@ public class UserServiceImpl implements UserService {
 
         //拷贝内容
         User user = ConvertBeanUtils.converBean2Bean(dto, User.class);
+
+        /*如有日期类型 参考如下方式
+        user.setCreateDate(this.convert2Time(dto.getCreateDate()));*/
+
         List<UserRes> resList = null;
         try {
             resList = userMapper.selectUserListByCondition(user);
         } catch (Exception e) {
             e.printStackTrace();
-            log.error("【根据条件查询user列表】失败,dto={}", dto);
+            log.error("【根据条件查询user列表】失败,userId={},userName={}", dto.getUserId(), dto.getUserName());
             throw new CloudApiServerException(ApiErrorCode.query_failure);
         }
 

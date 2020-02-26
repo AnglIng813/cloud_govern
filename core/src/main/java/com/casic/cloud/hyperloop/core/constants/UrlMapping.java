@@ -11,6 +11,8 @@ public class UrlMapping {
 
     /** 登录相关 */
     public static final String LOGINS = "/login";
+    /** 登录 */
+    public static final String SININ = BASE + LOGINS + "/sinin";
     /** 重定向接口 */
     public static final String REDIRECT = BASE + LOGINS + "/redirect";
     /** 登出接口 */

@@ -30,7 +30,7 @@ public class AccountController {
      * @Date: 2020/2/20 13:18
      */
     @ApiOperation(value = "用户登录-GET请求", httpMethod = "GET")
-    @GetMapping(UrlMapping.LOGINS)
+    @GetMapping(UrlMapping.SININ)
     public ApiResult login(@ApiIgnore @WithAccess User user) {
 
         //测试WithAccess

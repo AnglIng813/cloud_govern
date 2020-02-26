@@ -29,8 +29,15 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
     @Autowired
     private LoginInterceptor loginInterceptor;
 
+    @Autowired
+    private WithAccessMethodArgumentResolver withAccessMethodArgumentResolver;
+
     @Value("${safelogin.url.patterns}")
     private String patterns;
+
+    @Value("${safelogin.url.exclude-patterns}")
+    private String excludePatterns;
+
 
     /**
      * 注册拦截器
@@ -38,9 +45,8 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        if(StringUtils.isNotBlank(patterns)){
-            registry.addInterceptor(loginInterceptor).addPathPatterns(patterns.split("."));
-        }
+        registry.addInterceptor(loginInterceptor).addPathPatterns(patterns.split(","))
+                .excludePathPatterns(excludePatterns.split(","));
     }
 
     /**
@@ -49,7 +55,7 @@ public class MyWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(new WithAccessMethodArgumentResolver());
+        resolvers.add(withAccessMethodArgumentResolver);
     }
 
 }

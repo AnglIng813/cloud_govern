@@ -336,7 +336,6 @@
       <if test="userId != null and userId != ''" >user_id = #{userId,jdbcType=BIGINT}</if>
       <if test="userName != null and userName != ''" >and user_name = #{userName,jdbcType=VARCHAR}</if>
     </where>
-    where user_id = #{userId,jdbcType=BIGINT}
   </select>
   <select id="selectUserListByCondition" resultType="com.casic.cloud.hyperloop.core.model.result.UserRes">
     select
@@ -346,6 +345,5 @@
       <if test="userId != null and userId != ''" >user_id = #{userId,jdbcType=BIGINT}</if>
       <if test="userName != null and userName != ''" >and user_name = #{userName,jdbcType=VARCHAR}</if>
     </where>
-    where user_id = #{userId,jdbcType=BIGINT}
   </select>
 </mapper>

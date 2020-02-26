@@ -10,10 +10,14 @@ public class UrlMapping {
     public static final String BASE = "/api/v1";
     /** 登录相关 */
     public static final String LOGINS = "/login";
+    /** 登录 */
+    public static final String SININ = BASE + LOGINS + "/sinin";
     /** 重定向接口 */
     public static final String REDIRECT = BASE + LOGINS + "/redirect";
     /** 登出接口 */
     public static final String LOGOUT = BASE + LOGINS + "/logout";
+    /**  验证码 */
+    public static final String VERIFY_CODE = BASE + LOGINS + "/verifycode";
 
 
 //    /**

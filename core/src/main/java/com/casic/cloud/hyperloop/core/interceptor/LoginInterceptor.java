@@ -33,7 +33,7 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        /*//TODO 此处可定义自定义注解，来跳过登录认证
+        /*//TODO 此处可定义自定义注解，来跳过登录认证，更加灵活
         boolean flag = false;
         if(handler instanceof HandlerMethod){
             HandlerMethod h = (HandlerMethod)handler;
@@ -59,9 +59,13 @@ public class LoginInterceptor implements HandlerInterceptor {
             response.sendRedirect(loginUrl);*/
 
             /*第二种*/
-            String callback = request.getRequestURL() + "?" + request.getQueryString();
+            StringBuffer callback = request.getRequestURL();
+            if (StringUtils.isNotBlank(request.getQueryString())) {
+                callback.append("?" + request.getQueryString());
+            }
+
             //认证失败 401
-            String msg = JSONObject.toJSONString(ApiResult.addFail(ApiErrorCode.no_login_web.getCode(), callback, null));
+            String msg = JSONObject.toJSONString(ApiResult.addFail(ApiErrorCode.no_login_web.getCode(), callback.toString(), null));
             response.getWriter().write(msg);
             return false;
         }

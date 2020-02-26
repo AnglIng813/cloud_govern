@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -30,6 +31,7 @@ import java.util.Objects;
  * @version: V1.0
  */
 @Slf4j
+@Component
 public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
@@ -37,19 +39,20 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
-        return methodParameter.hasMethodAnnotation(WithAccess.class);
+        //此处特别注意，我们使用的是参数注解
+        return methodParameter.hasParameterAnnotation(WithAccess.class);
     }
 
     @Override
     public Object resolveArgument(MethodParameter methodParameter, ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest, WebDataBinderFactory webDataBinderFactory) throws Exception {
         //没打注解，不需要处理
-        WithAccess withAccess = methodParameter.getMethodAnnotation(WithAccess.class);
+        WithAccess withAccess = methodParameter.getParameterAnnotation(WithAccess.class);
         if (Objects.isNull(withAccess)) {
             return null;
         }
 
         //打了注解且开启了认证
-        if(withAccess.required()){
+        if (withAccess.required()) {
             //认证失败抛401
             Long userId = this.authorization(nativeWebRequest);
             if (Objects.isNull(userId)) {

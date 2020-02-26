@@ -48,18 +48,22 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
             return null;
         }
 
-        //打了注解且开启了认证，认证失败抛401
-        Long userId = this.authorization(nativeWebRequest);
-        if (Objects.isNull(userId) && withAccess.required()) {
-            throw new CloudApiServerException(withAccess.apiErrorCode());
-        }
+        //打了注解且开启了认证
+        if(withAccess.required()){
+            //认证失败抛401
+            Long userId = this.authorization(nativeWebRequest);
+            if (Objects.isNull(userId)) {
+                throw new CloudApiServerException(withAccess.apiErrorCode());
+            }
 
-        //返回用户
-        if (methodParameter.getParameterType().equals(User.class)) {
-            UserDTO userDTO = new UserDTO();
-            userDTO.setUserId(userId);
-            UserRes res = userService.selectByCondition(userDTO);
-            return ConvertBeanUtils.converBean2Bean(res, User.class);
+            //返回用户
+            if (methodParameter.getParameterType().equals(User.class)) {
+                UserDTO userDTO = new UserDTO();
+                userDTO.setUserId(userId);
+                UserRes res = userService.selectByCondition(userDTO);
+                return ConvertBeanUtils.converBean2Bean(res, User.class);
+            }
+
         }
 
         return null;

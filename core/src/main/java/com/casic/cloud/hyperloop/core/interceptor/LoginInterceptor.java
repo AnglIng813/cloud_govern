@@ -8,10 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.lang.invoke.MethodHandle;
 import java.net.URLDecoder;
 import java.util.Objects;
 
@@ -31,12 +33,23 @@ public class LoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        /*//TODO 此处可定义自定义注解，来跳过登录认证
+        boolean flag = false;
+        if(handler instanceof HandlerMethod){
+            HandlerMethod h = (HandlerMethod)handler;
+            if(h.getMethod().isAnnotationPresent("自定义注解.class")){
+                MyAnnotation m = h.getMethodAnnotation("自定义注解.class");
+                flag = m.required();
+            }
+        }*/
+
+
         /**
-         * 此处两种方式
+         * 此处未登录两种处理方式
          * 1.可进行页面跳转
          * 2.提示前端状态码(当前采用第二种方式)
+         *
          */
-
         if (this.authorization(request)) {
             /*第一种
             String callback = request.getRequestURL() + "?" + request.getQueryString();

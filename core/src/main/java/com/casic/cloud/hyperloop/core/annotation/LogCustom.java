@@ -13,7 +13,7 @@ public @interface LogCustom {
      *
      * @return
      */
-    String module() default "";
+    String  module () default "";
 
 
     /**
@@ -28,6 +28,15 @@ public @interface LogCustom {
      *
      * @return
      */
-    String operationType() default "";
+    OperationEnum operationType() default OperationEnum.ADD;
+
+
+    /**
+     * @return
+     */
+    String description() default "";
+
+
+
 
 }

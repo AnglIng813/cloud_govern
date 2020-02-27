@@ -38,6 +38,7 @@ public class LogAround implements Ordered {
     @Around("logPointCut()")
     public Object around(JoinPoint joinPoint) {
         System.out.println("--------------------开始--------------------");
+        long start = System.currentTimeMillis();
         //获取请求ip
         String ip = IpUtil.getIpAddr(request);
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -48,8 +49,7 @@ public class LogAround implements Ordered {
         String module = method.getAnnotation(LogCustom.class).module();
         //操作
         String operation = method.getAnnotation(LogCustom.class).operation();
-        String operationType = method.getAnnotation(LogCustom.class).operationType();
-        //        HttpSession session = request.getSession();
+        String operationType = method.getAnnotation(LogCustom.class).operationType().getContent();
         //用户名
         String userName = "userName";
         //请求参数
@@ -58,17 +58,15 @@ public class LogAround implements Ordered {
         for (Object o : param) {
             sb.append(o + "; ");
         }
-
-        long start = System.currentTimeMillis();
         Object ob = null;
         try {
             ob = ((ProceedingJoinPoint) joinPoint).proceed();
             if (log.isInfoEnabled()) {
                 log.info("代码路径->" + methodDeclaringClass.toString() + "." + method.getName());
-                log.info(module + "->" + userName + "进行" + operation+"，操作类型："+operationType);
+                log.info(module + "->" + userName + "进行" + operation + "，操作类型：" + operationType);
                 if (sb.length() > 0) {
                     log.info("请求参数->" + sb.toString());
-                }else{
+                } else {
                     log.info("请求参数->无参数");
                 }
                 log.info("请求ip->" + ip);

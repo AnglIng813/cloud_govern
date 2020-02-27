@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.casic.cloud.hyperloop.login.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.casic.cloud.hyperloop.login.model.domain.User" >
+<mapper namespace="com.casic.cloud.hyperloop.core.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.casic.cloud.hyperloop.core.model.domain.User" >
     <id column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="show_name" property="showName" jdbcType="VARCHAR" />
@@ -44,7 +44,7 @@
     delete from user
     where user_id = #{userId,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+  <insert id="insert" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     insert into user (user_id, user_name, show_name, 
       password, department_id, department_name, 
       auth_id, login_id, role_name, 
@@ -64,7 +64,7 @@
       #{resetPwdDate,jdbcType=TIMESTAMP}, #{frozenTimes,jdbcType=VARCHAR}, #{frozenDate,jdbcType=TIMESTAMP}, 
       #{namespace,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+  <insert id="insertSelective" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
@@ -221,7 +221,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     update user
     <set >
       <if test="userName != null" >
@@ -299,7 +299,7 @@
     </set>
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+  <update id="updateByPrimaryKey" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       show_name = #{showName,jdbcType=VARCHAR},
@@ -328,7 +328,16 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.casic.cloud.hyperloop.login.model.domain.User" >
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.casic.cloud.hyperloop.core.model.result.UserRes" >
+    select
+    <include refid="Base_Column_List" />
+    from user
+    <where>
+      <if test="userId != null and userId != ''" >user_id = #{userId,jdbcType=BIGINT}</if>
+      <if test="userName != null and userName != ''" >and user_name = #{userName,jdbcType=VARCHAR}</if>
+    </where>
+  </select>
+  <select id="selectUserListByCondition" resultType="com.casic.cloud.hyperloop.core.model.result.UserRes">
     select
     <include refid="Base_Column_List" />
     from user

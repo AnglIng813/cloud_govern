@@ -1,5 +1,7 @@
 package com.casic.cloud.hyperloop.common.handler;
 
+import com.casic.cloud.hyperloop.common.exception.CloudApiServerException;
+import com.casic.cloud.hyperloop.common.exception.base.BaseException;
 import com.casic.cloud.hyperloop.common.model.result.ApiErrorCode;
 import com.casic.cloud.hyperloop.common.model.result.ApiResult;
 import lombok.extern.slf4j.Slf4j;
@@ -29,15 +31,21 @@ public class GlobalExceptionHandler {
     @Autowired
     HttpServletRequest httpServletRequest;
 
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class,BindException.class})
-    public Object MethodArgumentNotValidHandler(Object exception){
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class, BindException.class, BaseException.class})
+    public Object MethodArgumentNotValidHandler(Object exception) {
         //按需重新封装需要返回的错误信息
+        if (exception instanceof BaseException) {
+            BaseException baseException = (BaseException) exception;
+            log.info("【GlobalExceptionHandler】异常类型，BaseException");
+            return baseException.getApiResult();
+        }
+
         BindingResult bindingResult = null;
-        if(exception instanceof MethodArgumentNotValidException){
+        if (exception instanceof MethodArgumentNotValidException) {
             bindingResult = ((MethodArgumentNotValidException) exception).getBindingResult();
             log.info("【验证框架】异常类型，MethodArgumentNotValidException");
-        }else if(exception instanceof BindException){
-            exception = (BindException)exception;
+        } else if (exception instanceof BindException) {
+            exception = (BindException) exception;
             bindingResult = ((BindException) exception).getBindingResult();
             log.info("【验证框架】异常类型，BindException");
         }
@@ -50,8 +58,9 @@ public class GlobalExceptionHandler {
         //错误提示信息
         String errorMsg = bindingResult.getFieldError().getDefaultMessage();
         //内容
-        String errorValue = (String)bindingResult.getFieldError().getRejectedValue();
+        String errorValue = (String) bindingResult.getFieldError().getRejectedValue();
 
         return ApiResult.addFail(errorCode, errorField + "-->>" + errorMsg, null);
     }
+
 }

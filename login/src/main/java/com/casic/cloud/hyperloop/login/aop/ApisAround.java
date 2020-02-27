@@ -57,7 +57,7 @@ public class ApisAround implements Ordered {
         log.info("请求时间->"+ DateUtil.LocalDateTime2String(LocalDateTime.now()));
 
         if(apiOperation != null){
-            log.info("API方法->"+(api == null ? "":"【"+api.description()+"】->")+apiOperation.value());
+            log.info("API方法->"+(api == null ? "":"【"+api.value()+"】->")+apiOperation.value());
         }
         log.info("代码路径->"+z.toString()+"."+targetMethod.getName());
         log.info("请求路径->"+request.getRequestURI());

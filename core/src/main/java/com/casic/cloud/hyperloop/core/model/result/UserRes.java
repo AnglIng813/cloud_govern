@@ -1,4 +1,4 @@
-package com.casic.cloud.hyperloop.login.model.result;
+package com.casic.cloud.hyperloop.core.model.result;
 
 import com.casic.cloud.hyperloop.common.model.result.BaseRes;
 import io.swagger.annotations.ApiModel;

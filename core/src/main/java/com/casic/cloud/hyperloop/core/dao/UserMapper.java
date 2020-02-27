@@ -1,7 +1,10 @@
-package com.casic.cloud.hyperloop.login.dao;
+package com.casic.cloud.hyperloop.core.dao;
 
-import com.casic.cloud.hyperloop.login.model.domain.User;
+import com.casic.cloud.hyperloop.core.model.domain.User;
+import com.casic.cloud.hyperloop.core.model.result.UserRes;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 @Mapper
 public interface UserMapper {
@@ -17,5 +20,7 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User selectByCondition(User record);
+    UserRes selectByCondition(User record);
+
+    List<UserRes> selectUserListByCondition(User user);
 }

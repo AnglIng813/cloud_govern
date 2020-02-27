@@ -10,7 +10,8 @@ public interface KubernetesService {
     PodList getPodList();
 
     public static void main(String[] args) {
-        PodList list = KubernetesClientUtils.getK8sClientWithoutCert().pods().inNamespace("admin").list();
+        KubernetesClientUtils client = new KubernetesClientUtils();
+        PodList list = client.getK8sClientWithoutCert().pods().inNamespace("admin").list();
 
     }
 }

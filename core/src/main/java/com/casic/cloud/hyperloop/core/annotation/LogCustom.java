@@ -1,11 +1,11 @@
-package com.casic.cloud.hyperloop.core.anno;
+package com.casic.cloud.hyperloop.core.annotation;
 
 import java.lang.annotation.*;
 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Log {
+public @interface LogCustom {
 
 
     /**

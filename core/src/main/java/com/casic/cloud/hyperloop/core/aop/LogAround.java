@@ -1,7 +1,7 @@
 package com.casic.cloud.hyperloop.core.aop;
 
 import com.casic.cloud.hyperloop.common.utils.IpUtil;
-import com.casic.cloud.hyperloop.core.anno.Log;
+import com.casic.cloud.hyperloop.core.annotation.LogCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -9,12 +9,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
@@ -25,8 +22,10 @@ import java.lang.reflect.Method;
 @Slf4j
 public class LogAround implements Ordered {
 
+    @Autowired
+    private HttpServletRequest request;
 
-    @Pointcut("@annotation(com.casic.cloud.hyperloop.core.anno.Log)")
+    @Pointcut("@annotation(com.casic.cloud.hyperloop.core.annotation.LogCustom)")
     public void logPointCut() {
     }
 
@@ -39,7 +38,6 @@ public class LogAround implements Ordered {
     @Around("logPointCut()")
     public Object around(JoinPoint joinPoint) {
         System.out.println("--------------------开始--------------------");
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         //获取请求ip
         String ip = IpUtil.getIpAddr(request);
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -47,10 +45,10 @@ public class LogAround implements Ordered {
         Method method = methodSignature.getMethod();
         Class<?> methodDeclaringClass = method.getDeclaringClass();
         //模块名称
-        String module = method.getAnnotation(Log.class).module();
+        String module = method.getAnnotation(LogCustom.class).module();
         //操作
-        String operation = method.getAnnotation(Log.class).operation();
-        String operationType = method.getAnnotation(Log.class).operationType();
+        String operation = method.getAnnotation(LogCustom.class).operation();
+        String operationType = method.getAnnotation(LogCustom.class).operationType();
         //        HttpSession session = request.getSession();
         //用户名
         String userName = "userName";

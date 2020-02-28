@@ -1,0 +1,58 @@
+{
+  "id": "1657802",
+  "name": "wei2",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7192356",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e721",
+      "unicode_decimal": 59169
+    },
+    {
+      "icon_id": "7193674",
+      "name": "返回",
+      "font_class": "fanhui",
+      "unicode": "e72e",
+      "unicode_decimal": 59182
+    },
+    {
+      "icon_id": "12710535",
+      "name": "语音交互",
+      "font_class": "yuyinjiaohu",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "1336383",
+      "name": "转移",
+      "font_class": "plus-transfer",
+      "unicode": "e724",
+      "unicode_decimal": 59172
+    },
+    {
+      "icon_id": "2579046",
+      "name": "转移",
+      "font_class": "zhuanyi",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "6169384",
+      "name": "限流配置",
+      "font_class": "xianliupeizhi",
+      "unicode": "e9ab",
+      "unicode_decimal": 59819
+    },
+    {
+      "icon_id": "7329823",
+      "name": "流量监控",
+      "font_class": "liuliangjiankong",
+      "unicode": "ea88",
+      "unicode_decimal": 60040
+    }
+  ]
+}

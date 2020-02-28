@@ -1,0 +1,42 @@
+<div id="tablelist" class="systemPage ng-scope" ng-controller="container-statistics">
+	<div class="wrapper-md ng-scope">
+		<h1 class="m-n font-thin h4 text-black">容器流量监控</h1>
+		<p></p>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 8px;">
+			<button type="button" class="btnStyl" ui-sref="app.traffic-statistics">
+				<i class="iconfont icon-fanhui"></i>
+				返回首页
+			</button>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped m-b-none">
+			<thead>
+				<tr>
+					<th>容器名称</th>
+					<th>创建时间</th>
+					<th>上传(MB)</th>
+					<th>下载(MB)</th>
+					<th>上传实时速率(KB/S)</th>
+					<th>下载实时速率(kB/S)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>container_1</td>
+					<td>2020-02-14</td>
+					<td>10</td>
+					<td>20</td>
+					<td>200</td>
+					<td>300</td>
+				</tr>
+			</tbody>
+		</table>
+		<tm-pagination conf="paginationConf"></tm-pagination>
+		<div class="panel-heading" style="padding: 8px;background: white;">
+			<div style="height: 40px;"></div>
+		</div>
+		</div>	
+	</div>
+</div>

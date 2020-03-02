@@ -29,6 +29,8 @@ safelogin:
   url:
     patterns: /api/v1/*
     exclude-patterns: /api/v1/login/*,/swagger-ui.html
+    #    patterns: /**
+    #    exclude-patterns: /api/v1/login/*,/swagger-resources/**,/v2/**,/swagger-ui.html
   #login页
   login:
     url: http://localhost:8080/api/v1/login

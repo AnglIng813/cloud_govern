@@ -1,9 +1,6 @@
 package com.casic.cloud.hyperloop.core.controller;
 
-import com.casic.cloud.hyperloop.common.model.result.ApiResult;
-import com.casic.cloud.hyperloop.common.utils.ConvertBeanUtils;
 import com.casic.cloud.hyperloop.core.constants.UrlMapping;
-import com.casic.cloud.hyperloop.core.model.vo.LoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -11,7 +8,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 

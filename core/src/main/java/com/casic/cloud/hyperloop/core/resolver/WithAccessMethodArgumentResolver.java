@@ -9,7 +9,7 @@ import com.casic.cloud.hyperloop.core.constants.CoreConstants;
 import com.casic.cloud.hyperloop.core.model.domain.User;
 import com.casic.cloud.hyperloop.core.model.dto.UserDTO;
 import com.casic.cloud.hyperloop.core.model.result.UserRes;
-import com.casic.cloud.hyperloop.core.service.UserService;
+import com.casic.cloud.hyperloop.core.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,7 @@ import java.util.Objects;
 public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentResolver {
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
@@ -63,7 +63,7 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
             if (methodParameter.getParameterType().equals(User.class)) {
                 UserDTO userDTO = new UserDTO();
                 userDTO.setUserId(userId);
-                UserRes res = userService.selectByCondition(userDTO);
+                UserRes res = accountService.selectByCondition(userDTO);
                 return ConvertBeanUtils.converBean2Bean(res, User.class);
             }
 

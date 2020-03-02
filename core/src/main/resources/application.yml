@@ -29,8 +29,11 @@ pagehelper:
 ## Mybatis 配置
 mybatis:
   configuration:
-   #解决返回map时，如果字段值为空，则key被过滤的问题
+    #解决返回map时，如果字段值为空，则key被过滤的问题
     call-setters-on-nulls: true
+    #打印sql
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 ## swagger
 apis:

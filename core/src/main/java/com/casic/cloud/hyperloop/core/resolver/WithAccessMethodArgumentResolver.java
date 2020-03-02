@@ -1,8 +1,7 @@
 package com.casic.cloud.hyperloop.core.resolver;
 
-import com.alibaba.fastjson.JSONObject;
 import com.casic.cloud.hyperloop.common.exception.CloudApiServerException;
-import com.casic.cloud.hyperloop.common.utils.AesEncryptUtil;
+import com.casic.cloud.hyperloop.common.utils.AuthorizationUtil;
 import com.casic.cloud.hyperloop.common.utils.ConvertBeanUtils;
 import com.casic.cloud.hyperloop.core.annotation.WithAccess;
 import com.casic.cloud.hyperloop.core.constants.CoreConstants;
@@ -11,7 +10,6 @@ import com.casic.cloud.hyperloop.core.model.dto.UserDTO;
 import com.casic.cloud.hyperloop.core.model.result.UserRes;
 import com.casic.cloud.hyperloop.core.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -21,7 +19,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URLDecoder;
 import java.util.Objects;
 
 /**
@@ -54,7 +51,8 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
         //打了注解且开启了认证
         if (withAccess.required()) {
             //认证失败抛401
-            Long userId = this.authorization(nativeWebRequest);
+            HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
+            Long userId = AuthorizationUtil.authorization(request, CoreConstants.REQUEST_ATTR_USERID);
             if (Objects.isNull(userId)) {
                 throw new CloudApiServerException(withAccess.apiErrorCode());
             }
@@ -72,38 +70,5 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
         return null;
     }
 
-
-    private Long authorization(NativeWebRequest nativeWebRequest) {
-        try {
-            HttpServletRequest request = nativeWebRequest.getNativeRequest(HttpServletRequest.class);
-            String confusionStr = "Hyperloop ";
-            String authorization = request.getHeader("Authorization");
-            if (StringUtils.isEmpty(authorization) || !authorization.startsWith(confusionStr)) {
-                return null;
-            }
-            String token = authorization.substring(confusionStr.length());
-            if (StringUtils.isEmpty(token) || StringUtils.equalsIgnoreCase("undefined", token)) {
-                return null;
-            }
-            String decode = URLDecoder.decode(token, System.getProperty("file.encoding"));
-            //解密
-            JSONObject obj = JSONObject.parseObject(AesEncryptUtil.aesCbcPkcs5PaddingDecrypt(decode));
-            if (Objects.isNull(obj)) {
-                return null;
-            }
-            if (!StringUtils.equals(obj.getString("typ"), "JWT")
-                    || !StringUtils.equals(obj.getString("project"), "tianyicloud")) {
-                return null;
-            }
-
-            return obj.getLong(CoreConstants.REQUEST_ATTR_USERID);//拿到用户id
-
-        } catch (Exception e) {
-            log.info("认证失败");
-            e.printStackTrace();
-            return null;
-        }
-
-    }
 
 }

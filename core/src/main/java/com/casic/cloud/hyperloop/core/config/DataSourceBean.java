@@ -1,5 +1,6 @@
 package com.casic.cloud.hyperloop.core.config;
 
+import com.mysql.jdbc.Driver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +31,9 @@ public class DataSourceBean {
     @Value("${datasource.password}")
     private String password;
 
+    @Value("${datasource.driver}")
+    private String driver;
+
     @Bean     //声明其为Bean实例
     public DataSource dataSource() {
         DruidDataSource datasource = new DruidDataSource();
@@ -38,6 +42,7 @@ public class DataSourceBean {
         datasource.setUrl(url);
         datasource.setUsername(username);
         datasource.setPassword(password);
+        datasource.setDriverClassName(driver);
         String connectionInitSqls = "SET NAMES utf8mb4";
         StringTokenizer tokenizer = new StringTokenizer(connectionInitSqls, ";");
         datasource.setConnectionInitSqls(Collections.list(tokenizer));//重点设置该参数

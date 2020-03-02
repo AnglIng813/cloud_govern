@@ -1,5 +1,6 @@
 ## datasource
 datasource:
+  driver: com.mysql.cj.jdbc.Driver
   name: test
   url: jdbc:mysql://10.11.100.58:3306/cloud2.4.4.2.0.0?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
   username: root

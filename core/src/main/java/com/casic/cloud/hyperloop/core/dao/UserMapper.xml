@@ -28,6 +28,33 @@
     <result column="frozen_date" property="frozenDate" jdbcType="TIMESTAMP" />
     <result column="namespace" property="namespace" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="UserResResultMap" type="com.casic.cloud.hyperloop.core.model.result.UserRes" >
+    <id column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="show_name" property="showName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="department_id" property="departmentId" jdbcType="BIGINT" />
+    <result column="department_name" property="departmentName" jdbcType="VARCHAR" />
+    <result column="auth_id" property="authId" jdbcType="BIGINT" />
+    <result column="login_id" property="loginId" jdbcType="BIGINT" />
+    <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="login_status" property="loginStatus" jdbcType="BIGINT" />
+    <result column="status" property="status" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="lastLogin_date" property="lastloginDate" jdbcType="TIMESTAMP" />
+    <result column="sign_id" property="signId" jdbcType="VARCHAR" />
+    <result column="auth_ids" property="authIds" jdbcType="VARCHAR" />
+    <result column="department_admin" property="departmentAdmin" jdbcType="BIT" />
+    <result column="login_failure_times" property="loginFailureTimes" jdbcType="INTEGER" />
+    <result column="reset_pwd_date" property="resetPwdDate" jdbcType="TIMESTAMP" />
+    <result column="frozen_times" property="frozenTimes" jdbcType="VARCHAR" />
+    <result column="frozen_date" property="frozenDate" jdbcType="TIMESTAMP" />
+    <result column="namespace" property="namespace" jdbcType="VARCHAR" />
+  </resultMap>
   <sql id="Base_Column_List" >
     user_id, user_name, show_name, password, department_id, department_name, auth_id, 
     login_id, role_name, phone, telephone, email, login_status, status, create_date, 
@@ -328,7 +355,7 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
 
-  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="com.casic.cloud.hyperloop.core.model.result.UserRes" >
+  <select id="selectByCondition" resultMap="UserResResultMap" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     select
     <include refid="Base_Column_List" />
     from user
@@ -337,7 +364,7 @@
       <if test="userName != null and userName != ''" >and user_name = #{userName,jdbcType=VARCHAR}</if>
     </where>
   </select>
-  <select id="selectUserListByCondition" resultType="com.casic.cloud.hyperloop.core.model.result.UserRes">
+  <select id="selectUserListByCondition" resultMap="UserResResultMap" parameterType="com.casic.cloud.hyperloop.core.model.domain.User" >
     select
     <include refid="Base_Column_List" />
     from user

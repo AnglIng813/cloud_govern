@@ -93,10 +93,10 @@ public class AccountServiceImpl implements AccountService {
         //密码
         if (!SM3Utils.verifyWithKey(dto.getPassword(), res.getPassword())) {
             log.error("【密码校验】密码错误");
-            throw new CloudApiServerException(ApiErrorCode.account_not_exists);
+            throw new CloudApiServerException(ApiErrorCode.failed_password);
         }
 
-        return this.buildToken(res.getUserId());
+        return "Hyperloop " + this.buildToken(res.getUserId());
     }
 
 

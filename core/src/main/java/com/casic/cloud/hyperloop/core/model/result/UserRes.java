@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
 @ApiModel
 public class UserRes extends BaseRes {
@@ -54,13 +56,13 @@ public class UserRes extends BaseRes {
     private Long status;
 
     @ApiModelProperty(value = "创建时间")
-    private Long createDate;
+    private Date createDate;
 
     @ApiModelProperty(value = "修改时间")
-    private Long modifyDate;
+    private Date modifyDate;
 
     @ApiModelProperty(value = "最后登录时间")
-    private Long lastloginDate;
+    private Date lastloginDate;
 
     @ApiModelProperty(value = "")
     private String signId;
@@ -75,13 +77,13 @@ public class UserRes extends BaseRes {
     private Integer loginFailureTimes;
 
     @ApiModelProperty(value = "重置密码时间")
-    private Long resetPwdDate;
+    private Date resetPwdDate;
 
     @ApiModelProperty(value = "账户剩余冻结时间")
     private String frozenTimes;
 
     @ApiModelProperty(value = "账户冻结日期")
-    private Long frozenDate;
+    private Date frozenDate;
 
     @ApiModelProperty(value = "租户命名空间")
     private String namespace;

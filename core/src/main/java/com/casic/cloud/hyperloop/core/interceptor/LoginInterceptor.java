@@ -4,17 +4,22 @@ import com.alibaba.fastjson.JSONObject;
 import com.casic.cloud.hyperloop.common.model.result.ApiErrorCode;
 import com.casic.cloud.hyperloop.common.model.result.ApiResult;
 import com.casic.cloud.hyperloop.common.utils.AesEncryptUtil;
+import com.casic.cloud.hyperloop.common.utils.AuthorizationUtil;
+import com.casic.cloud.hyperloop.core.constants.CoreConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
+import sun.security.pkcs11.wrapper.Constants;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.lang.invoke.MethodHandle;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Objects;
 
 /**
@@ -50,7 +55,7 @@ public class LoginInterceptor implements HandlerInterceptor {
          * 2.提示前端状态码(当前采用第二种方式)
          *
          */
-        if (this.authorization(request)) {
+        if (Objects.isNull(AuthorizationUtil.authorization(request, CoreConstants.REQUEST_ATTR_USERID))) {
             /*第一种
             String callback = request.getRequestURL() + "?" + request.getQueryString();
             if (StringUtils.isNotEmpty(callback)) {
@@ -73,34 +78,5 @@ public class LoginInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private boolean authorization(HttpServletRequest request) {
-        try {
-            String confusionStr = "Hyperloop ";
-            String authorization = request.getHeader("Authorization");
-            if (StringUtils.isEmpty(authorization) || !authorization.startsWith(confusionStr)) {
-                return true;
-            }
-            String token = authorization.substring(confusionStr.length());
-            if (StringUtils.isEmpty(token) || StringUtils.equalsIgnoreCase("undefined", token)) {
-                return true;
-            }
-            String decode = URLDecoder.decode(token, System.getProperty("file.encoding"));
-            //解密
-            JSONObject obj = JSONObject.parseObject(AesEncryptUtil.aesCbcPkcs5PaddingDecrypt(decode));
-            if (Objects.isNull(obj)) {
-                return true;
-            }
-            if (!StringUtils.equals(obj.getString("typ"), "JWT")
-                    || !StringUtils.equals(obj.getString("project"), "tianyicloud")) {
-                return true;
-            }
-
-        } catch (Exception e) {
-            log.info("认证失败");
-            e.printStackTrace();
-            return true;
-        }
-        return false;
-    }
 
 }

@@ -18,7 +18,7 @@ public class UrlMapping {
     /** 登出接口 */
     public static final String LOGOUT = BASE + LOGINS + "/logout";
     /** 临时获取token接口 */
-    public static final String TEMPORARY_TOKEN = BASE + LOGINS + "/logout";
+    public static final String TEMPORARY_TOKEN = BASE + LOGINS + "/temporary";
 
 //    /**
 //     * 根据模块区分 restful风格

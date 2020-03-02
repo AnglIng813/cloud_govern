@@ -1,15 +1,18 @@
 package com.casic.cloud.hyperloop.core.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.casic.cloud.hyperloop.common.exception.CloudApiServerException;
 import com.casic.cloud.hyperloop.common.model.result.ApiErrorCode;
+import com.casic.cloud.hyperloop.common.utils.AesEncryptUtil;
 import com.casic.cloud.hyperloop.common.utils.ConvertBeanUtils;
+import com.casic.cloud.hyperloop.common.utils.SM3Utils;
 import com.casic.cloud.hyperloop.core.dao.UserMapper;
 import com.casic.cloud.hyperloop.core.model.domain.User;
+import com.casic.cloud.hyperloop.core.model.dto.AccountDTO;
 import com.casic.cloud.hyperloop.core.model.dto.UserDTO;
 import com.casic.cloud.hyperloop.core.model.result.UserRes;
-import com.casic.cloud.hyperloop.core.service.UserService;
+import com.casic.cloud.hyperloop.core.service.AccountService;
 import com.github.pagehelper.PageHelper;
-import com.sun.tools.javac.util.Convert;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @Description:
@@ -26,7 +30,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private UserMapper userMapper;
@@ -75,8 +79,37 @@ public class UserServiceImpl implements UserService {
         return resList;
     }
 
+    @Override
+    public String validate(AccountDTO dto) {
+        //获取user
+        UserDTO userDTO = new UserDTO();
+        userDTO.setUserName(dto.getUserName());
+        UserRes res = this.selectByCondition(userDTO);
+        if (Objects.isNull(res)) {
+            log.error("【用户校验】用户不存在");
+            throw new CloudApiServerException(ApiErrorCode.account_not_exists);
+        }
+
+        //密码
+        if (!SM3Utils.verifyWithKey(dto.getPassword(), res.getPassword())) {
+            log.error("【密码校验】密码错误");
+            throw new CloudApiServerException(ApiErrorCode.account_not_exists);
+        }
+
+        return this.buildToken(res.getUserId());
+    }
+
 
     private Date convert2Time(Long createDate) {
         return new Date(createDate);
+    }
+
+    private String buildToken(Long userId) {
+        JSONObject object = new JSONObject();
+        //模拟jwt
+        object.put("typ", "JWT");
+        object.put("project", "tianyicloud");
+        object.put("userId", userId);
+        return AesEncryptUtil.aesCbcPkcs5PaddingEncrypt(object.toJSONString());
     }
 }

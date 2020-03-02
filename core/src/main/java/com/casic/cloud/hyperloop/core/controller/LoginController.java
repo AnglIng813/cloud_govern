@@ -1,6 +1,9 @@
 package com.casic.cloud.hyperloop.core.controller;
 
+import com.casic.cloud.hyperloop.common.model.result.ApiResult;
+import com.casic.cloud.hyperloop.common.utils.ConvertBeanUtils;
 import com.casic.cloud.hyperloop.core.constants.UrlMapping;
+import com.casic.cloud.hyperloop.core.model.vo.LoginVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -32,7 +35,7 @@ public class LoginController {
     private String loginUrl;
 
     /***
-     * @Description:重定向接口
+     * @Description:重定向接口-GET请求
      * @Author: LDC
      * @Date: 2020/2/19 16:14
      */
@@ -53,7 +56,7 @@ public class LoginController {
     }
 
     /***
-     * @Description:登出接口
+     * @Description:登出接口-GET请求
      * @Author: LDC
      * @Date: 2020/2/19 16:15
      */
@@ -70,5 +73,5 @@ public class LoginController {
         log.info("【登出接口】成功，跳转地址url={}",url);
         return new ModelAndView(new RedirectView(url));
     }
-    
+
 }

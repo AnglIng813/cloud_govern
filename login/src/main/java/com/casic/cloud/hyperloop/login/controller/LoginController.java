@@ -52,7 +52,8 @@ public class LoginController {
     @PostMapping(UrlMapping.SININ)
     public ApiResult login(@RequestBody LoginVO vo) {
         //校验
-        //生成token返回前端，后期可以考虑使用redis替换此方式
+        //生成token保存到session，并返回key，即userId
+        //后期可以考虑使用redis替换此方式
         Long userId = loginService.validate(ConvertBeanUtils.converBean2Bean(vo, LoginDTO.class));
         log.info("【登录接口】校验成功,userName={}", vo.getUserName());
         return ApiResult.addSuccess(userId);
@@ -77,7 +78,9 @@ public class LoginController {
         if (!callBack.startsWith("http") && !callBack.startsWith("https")) {
             callBack = "http://" + callBack;
         }
-        callBack = this.convertToken(callBack, userId);
+
+        //session中根据userId获取token
+        callBack = loginService.convertToken(callBack, userId);
 
         log.info("【重定向接口】成功，跳转地址url={}", callBack);
         return new ModelAndView(new RedirectView(callBack));
@@ -121,26 +124,4 @@ public class LoginController {
         new VerifyCodeUtil().generateImageCode(session, response);//不设置参数则使用默认配置
     }
 
-
-    @NotNull
-    private String convertToken(String callBack, Long userId) {
-        try {
-            JSONObject object = new JSONObject();
-            //模拟jwt
-            object.put("typ", "JWT");
-            object.put("project", "tianyicloud");
-            object.put("userId", userId);
-            String token = AesEncryptUtil.aesCbcPkcs5PaddingEncrypt(object.toJSONString());
-            if(StringUtils.contains(callBack, "?")){
-                callBack += "&token=" + URLEncoder.encode(token, System.getProperty("file.encoding"));
-            }else{
-                callBack += "?token=" + URLEncoder.encode(token, System.getProperty("file.encoding"));
-            }
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            log.error("token转码失败");
-            throw new CloudApiServerException(ApiErrorCode.server_exception);
-        }
-        return callBack;
-    }
 }

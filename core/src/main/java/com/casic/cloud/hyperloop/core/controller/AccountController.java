@@ -1,15 +1,20 @@
 package com.casic.cloud.hyperloop.core.controller;
 
 import com.casic.cloud.hyperloop.common.model.result.ApiResult;
+import com.casic.cloud.hyperloop.common.utils.ConvertBeanUtils;
 import com.casic.cloud.hyperloop.core.annotation.WithAccess;
 import com.casic.cloud.hyperloop.core.constants.UrlMapping;
 import com.casic.cloud.hyperloop.core.model.domain.User;
+import com.casic.cloud.hyperloop.core.model.dto.AccountDTO;
+import com.casic.cloud.hyperloop.core.model.vo.AccountVO;
+import com.casic.cloud.hyperloop.core.service.AccountService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
@@ -23,6 +28,11 @@ import springfox.documentation.annotations.ApiIgnore;
 @RestController
 @Api(tags = {"AccountController"}, value = "用户相关接口")
 public class AccountController {
+
+    @Autowired
+    private AccountService accountService;
+
+
 
     /***
      * @Description:用户登录
@@ -43,5 +53,18 @@ public class AccountController {
         return ApiResult.addSuccess();
     }
 
+    /**
+     * @Description:临时获取token接口-POST请求
+     * @Author: AnglIng
+     * @Date: 2020/3/2 9:42
+     */
+    @ApiOperation(value = "临时获取token接口-POST请求", httpMethod = "POST")
+    @PostMapping(UrlMapping.TEMPORARY_TOKEN)
+    public ApiResult login(@RequestBody AccountVO vo) {
+        //校验，生成token返回前端
+        String token = accountService.validate(ConvertBeanUtils.converBean2Bean(vo, AccountDTO.class));
+        log.info("【临时获取token接口】成功,userName={}", vo.getUserName());
+        return ApiResult.addSuccess(token);
+    }
 
 }

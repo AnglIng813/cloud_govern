@@ -11,10 +11,13 @@ import com.casic.cloud.hyperloop.login.model.dto.LoginDTO;
 import com.casic.cloud.hyperloop.login.service.LoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Objects;
 
 /**
@@ -53,6 +56,18 @@ public class LoginServiceImpl implements LoginService {
         request.getSession().setAttribute(user.getUserId().toString(), this.buildToken(user.getUserId()));
 
         return user.getUserId();
+    }
+
+    @Override
+    @NotNull
+    public String convertToken(String callBack, Long userId) {
+        String token = (String) request.getSession().getAttribute(userId.toString());
+        if (StringUtils.contains(callBack, "?")) {
+            callBack += "&token=" + token;
+        } else {
+            callBack += "?token=" + token;
+        }
+        return callBack;
     }
 
     private String buildToken(Long userId) {

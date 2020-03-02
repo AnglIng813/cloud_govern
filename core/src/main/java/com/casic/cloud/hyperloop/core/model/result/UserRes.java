@@ -1,6 +1,7 @@
 package com.casic.cloud.hyperloop.core.model.result;
 
 import com.casic.cloud.hyperloop.common.model.result.BaseRes;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -14,6 +15,10 @@ public class UserRes extends BaseRes {
 
     @ApiModelProperty(value = "用户名")
     private String userName;
+
+    @JsonIgnore
+    @ApiModelProperty(value = "密码")
+    private String password;
 
     @ApiModelProperty(value = "显示名")
     private String showName;

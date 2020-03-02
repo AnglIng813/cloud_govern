@@ -17,6 +17,8 @@ public class UrlMapping {
     public static final String REDIRECT = BASE + LOGINS + "/redirect";
     /** 登出接口 */
     public static final String LOGOUT = BASE + LOGINS + "/logout";
+    /** 临时获取token接口 */
+    public static final String TEMPORARY_TOKEN = BASE + LOGINS + "/logout";
 
 //    /**
 //     * 根据模块区分 restful风格

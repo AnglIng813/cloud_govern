@@ -1,0 +1,132 @@
+<div id="tablelist" class="systemPage ng-scope" ng-controller="traffic-transfer">
+	<div class="wrapper-md ng-scope">
+		<h1 class="m-n font-thin h4 text-black">TCP流量监控</h1>
+		<p></p>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 8px;">
+			<button type="button" class="btnStyl" data-toggle="modal" data-target="#myModal">增加</button>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-striped m-b-none">
+				<thead>
+					<tr>
+						<th>服务名称</th>
+						<th>容器名称</th>
+						<th>流量占比(%)</th>
+						<th>转移时间</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>service_1</td>
+						<td>container_1_1</td>
+						<td>50</td>
+						<td>2020-02-21</td>
+						<td class="ud-manage">
+							<div class="btn-group">
+								<button type="button" style="font-weight:bold;color: #1f8cce;" class="btn btn-default dropdown-toggle" data-toggle="dropdown">管理
+								<span class="caret"></span>
+							</button>
+								<ul class="dropdown-menu" role="menu" style="left:-40%;">
+									<li>
+										<a data-toggle="modal" data-target="#myModal">编辑</a>
+									</li>
+									<li>
+										<a data-toggle="modal" data-target="#myModala">删除</a>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<tm-pagination conf="paginationConf"></tm-pagination>
+			<div class="panel-heading" style="padding: 8px;background: white;">
+				<div style="height: 40px;"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+					<h4 class="modal-title" id="myModalLabel">创建流量转移</h4>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal ng-pristine ng-invalid ng-invalid-required ng-valid-maxlength" name="transfer">
+						<div class="form-group">
+							<label class="col-sm-2 control-label"><span style="color:red;">*</span>服务名称:</label>
+							<div class="col-sm-9">
+								<input class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" name="serviceName" ng-model="obj.service" required="" maxlength="32" placeholder="服务名称" type="text">
+							</div>
+						</div>
+						<div class="form-group ng-hide" ng-show="transfer.serviceName.$invalid &amp;&amp; transfer.serviceName.$dirty" style="color:red;">
+							<div class="col-sm-offset-2 col-sm-9">
+								请输入1-32个字符的服务名称。
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label"><span style="color:red;">*</span>源容器:</label>
+							<div class="col-sm-9">
+								<select class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" required>
+									<option value="container1">container1</option>
+								</select>
+							</div>
+						</div>
+						<div ng-repeat="(k,v) in list" style="    border-top: 1px solid lightgray;
+        padding-top: 20px;">
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><span style="color:red;">*</span>目的容器:</label>
+								<div class="col-sm-9">
+									<select class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" ng-model='list[k].targetContainer' required>
+										<option value="container1">container2</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-2 control-label"><span style="color:red;">*</span>流量占比:</label>
+								<div class="col-sm-9">
+									<input style="width: 80%;display: inline-block;" class="form-control ng-pristine ng-untouched ng-invalid ng-invalid-required ng-valid-maxlength" name="flow" ng-model="list[k].flow" required="" max="100" placeholder="流量占比" type="number">
+									<button type="button" class="btnStyl" ng-click="delContainer(k)">删除</button>							
+								</div>
+							</div>
+						</div>
+						<p style="color: dodgerblue;
+    cursor: pointer;
+    display: inline-block;
+    margin: 10px;" ng-click="addContainer()">+添加容器</p>
+						<div class="modal-footer">
+							<button class="btn btn-default btn-info" data-dismiss="modal">取消</button>
+							<button disabled="disabled" class="btn btn-primary" ng-disabled="transfer.$invalid" data-dismiss="modal" ng-click="transfers()">
+										确认
+									</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="myModala" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+					<h4 class="modal-title" id="myModalLabel">删除</h4>
+				</div>
+				<div class="modal-body">
+
+					<p class="ng-binding" style="color: red;font-size: 20px;">您确定要删除流量转移吗？</p>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal">取消</button>
+					<button class="btn btn-default btn-info" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

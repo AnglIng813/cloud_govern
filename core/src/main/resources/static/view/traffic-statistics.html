@@ -1,0 +1,38 @@
+<div id="tablelist" class="systemPage ng-scope" ng-controller="traffic-statistics">
+	<div class="wrapper-md ng-scope">
+		<h1 class="m-n font-thin h4 text-black">流量监控</h1>
+		<p></p>
+	</div>
+	<div class="panel panel-default">
+		<div class="table-responsive">
+			<table class="table table-striped m-b-none">
+			<thead>
+				<tr>
+					<th>服务名称</th>
+					<th>创建时间</th>
+					<th>上传(MB)</th>
+					<th>下载(MB)</th>
+					<th>上传实时速率(KB/S)</th>
+					<th>下载实时速率(kB/S)</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td ng-click="switch()">
+						<a class='activeName'>service_1</a>
+					</td>
+					<td>2020-02-14</td>
+					<td>10</td>
+					<td>20</td>
+					<td>200</td>
+					<td>300</td>
+				</tr>
+			</tbody>
+		</table>
+		<tm-pagination conf="paginationConf"></tm-pagination>
+		<div class="panel-heading" style="padding: 8px;background: white;">
+			<div style="height: 40px;"></div>
+		</div>
+		</div>	
+	</div>
+</div>

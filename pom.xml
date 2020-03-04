@@ -19,6 +19,7 @@
         <module>core</module>
         <module>login</module>
         <module>service-api</module>
+        <module>generator-builder</module>
     </modules>
 
     <properties>

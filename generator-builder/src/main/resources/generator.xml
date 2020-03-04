@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+     <comment>
+     	代码生成器配置文件:
+     </comment>
+     <entry key="basepackage">com.casic.cloud.hyperloop</entry>
+     
+     <!-- 需要移除的表名前缀,使用逗号进行分隔多个前缀,示例值: t_,v_ -->
+     <entry key="tableRemovePrefixes">d_</entry>
+     
+     <entry key="CHAR">String</entry>
+     <entry key="VARCHAR">String</entry>
+     <entry key="LONGVARCHAR">String</entry>
+     <entry key="BIT">Integer</entry>
+     <entry key="TINYINT">Integer</entry>
+     <entry key="NUMERIC">Double</entry>
+     <entry key="DECIMAL">java.math.BigDecimal</entry>
+     <entry key="BIGINT">Long</entry>
+     <entry key="REAL">Double</entry>
+     <entry key="DOUBLE">Double</entry>
+     <entry key="MEDIUMINT">Integer</entry>
+     <entry key="SMALLINT">Integer</entry>
+     <entry key="INTEGER">Integer</entry>
+     <entry key="INT">Integer</entry>
+     <entry key="DATE">java.util.Date</entry>
+     <entry key="TIME">java.util.Date</entry>
+     <entry key="DATETIME">java.util.Date</entry>
+     <entry key="TIMESTAMP">java.util.Date</entry>
+
+     
+     <entry key="jdbc.username">root</entry>
+     <entry key="jdbc.password">password</entry>
+     
+     <!-- oracle需要指定jdbc.schema,其它数据库忽略此项配置  -->
+     <!--<entry key="jdbc.schema">survey</entry>-->
+     <entry key="jdbc.catalog">zdy_mybatis</entry>
+     
+     
+     <!-- MySQL -->
+     <entry key="jdbc.url">jdbc:mysql://123.207.154.79:3306/zdy_mybatis?useUnicode=true&amp;characterEncoding=UTF-8</entry>
+     <entry key="jdbc.driver">com.mysql.cj.jdbc.Driver</entry>
+     
+     
+</properties>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="${package}.dao.mysql.${className}Mapper">
+	<!-- 返回值映射map -->
+	<resultMap id="${classNameLower}Mapper" type="${package}.bean.${className}">
+		<#list table.columns as column>
+			<result property="${column.name}" column="${column.dbName}" />
+		</#list>
+	</resultMap>
+
+	<!-- 查询字段公共sql -->
+	<sql id="selectAllColumns">
+		SELECT
+		<#list table.columns as column>
+			 ${column.dbName}<#if column_has_next>,</#if>
+		</#list>
+			FROM ${table.dbName}
+	</sql>
+
+	<sql id="where_fragement">
+		where 1=1
+		<#list table.columns as column>
+		<#if column.dbName == "del_flag">
+			and ${column.dbName} = 1
+		<#else>
+			<if test = ${"\""}${ r"" + column.name + r" != null" }${"\""}>
+				and ${column.dbName}  = ${ r"#{" + column.name }}
+			</if>
+		</#if>
+		</#list>
+	</sql>
+
+	<!-- 分页查询数据集合-->
+	<select id="findList" resultMap="${classNameLower}Mapper" >
+		<include refid="selectAllColumns"/>
+		<include refid="where_fragement" />
+		order by id desc
+	</select>
+
+	<!-- 查询单个实体 -->
+	<select id="selectOneByCondition" resultMap="${classNameLower}Mapper" >
+		<include refid="selectAllColumns"/>
+		<include refid="where_fragement" />
+        limit 1
+	</select>
+
+	<select id="getById" resultMap="${classNameLower}Mapper" >
+		<include refid="selectAllColumns"/>
+		where id = ${r"#{id}"}
+	</select>
+
+	<!-- 新增 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="${package}.bean.${className}">
+		insert into ${table.dbName}(
+			<trim suffix="" suffixOverrides=",">
+			<#list table.columns as column>
+				<if test = ${"\""}${ r"" + column.name + r" != null" }${"\""}>
+					${column.dbName}<#if column_has_next>,</#if>
+				</if>
+			</#list>
+			</trim>
+		)values(
+			<trim suffix="" suffixOverrides=",">
+			<#list table.columns as column>
+				<if test = ${"\""}${ r"" + column.name + r" != null" }${"\""}>
+					${ r"#{" + column.name + r"}" }<#if column_has_next>,</#if>
+				</if>
+			</#list>
+			</trim>
+		)
+	</insert>
+	<!-- 编辑 -->
+	<update id="update" parameterType="${package}.bean.${className}">
+		update ${table.dbName}
+			<trim suffix="" suffixOverrides=",">
+				<set>
+				<#list table.columns as column>
+				<#if column.name != 'id' && column.name != 'createdAt' && column.name != 'updatedAt'>
+					<if test = ${"\""}${ column.name + r" != null " }${"\""}>
+						${column.dbName} = ${ r"#{" + column.name + r"}" }<#if column_has_next>,</#if>
+					</if>
+				<#elseif column.name != 'id' >
+					<if test = ${"\""}${ column.name + r" != null" }${"\""}>
+						${column.dbName} = ${ r"#{" + column.name + r"}" }<#if column_has_next>,</#if>
+					</if>
+				</#if>
+				</#list>
+				</set>
+			</trim>
+		where id = ${r'#{id}'}
+	</update>
+
+</mapper>

@@ -62,6 +62,7 @@ public class WithAccessMethodArgumentResolver implements HandlerMethodArgumentRe
                 UserDTO userDTO = new UserDTO();
                 userDTO.setUserId(userId);
                 UserRes res = accountService.selectByCondition(userDTO);
+//                request.setAttribute("user",res);
                 return ConvertBeanUtils.converBean2Bean(res, User.class);
             }
 

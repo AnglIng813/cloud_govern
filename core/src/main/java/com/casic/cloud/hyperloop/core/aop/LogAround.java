@@ -1,6 +1,6 @@
 package com.casic.cloud.hyperloop.core.aop;
 
-import com.casic.cloud.hyperloop.common.utils.IpUtil;
+
 import com.casic.cloud.hyperloop.core.annotation.LogCustom;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -16,8 +16,13 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
+/**
+ * 自定义日志注解切面
+ *
+ * @author lvbaolin
+ */
 
-@Aspect // 1.表明这是一个切面类
+@Aspect
 @Component
 @Slf4j
 public class LogAround implements Ordered {
@@ -39,8 +44,6 @@ public class LogAround implements Ordered {
     public Object around(JoinPoint joinPoint) {
         System.out.println("--------------------开始--------------------");
         long start = System.currentTimeMillis();
-        //获取请求ip
-        String ip = IpUtil.getIpAddr(request);
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         //获取方法
         Method method = methodSignature.getMethod();
@@ -50,13 +53,9 @@ public class LogAround implements Ordered {
         String operation = method.getAnnotation(LogCustom.class).operation();
         String operationType = method.getAnnotation(LogCustom.class).operationType().getDescription();
         //用户名
-        String userName = "userName";
-        //请求参数
-        Object[] param = joinPoint.getArgs();
-        StringBuilder sb = new StringBuilder();
-        for (Object o : param) {
-            sb.append(o + "; ");
-        }
+//        UserRes userRes=(UserRes) request.getAttribute("user");
+//        System.out.println(userRes.getUserId()+":"+userRes.getUserName());
+        String userName ="userName";
         Object ob = null;
         try {
             ob = ((ProceedingJoinPoint) joinPoint).proceed();
@@ -81,7 +80,6 @@ public class LogAround implements Ordered {
     public int getOrder() {
         return 5;
     }
-
 
 
 }

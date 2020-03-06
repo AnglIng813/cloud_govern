@@ -1,5 +1,7 @@
 package com.casic.cloud.hyperloop.core.annotation;
 
+import com.casic.cloud.hyperloop.core.enums.OperationEnum;
+
 import java.lang.annotation.*;
 
 @Target({ElementType.METHOD})

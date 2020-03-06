@@ -44,12 +44,11 @@ public class LogAround implements Ordered {
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         //获取方法
         Method method = methodSignature.getMethod();
-        Class<?> methodDeclaringClass = method.getDeclaringClass();
         //模块名称
         String module = method.getAnnotation(LogCustom.class).module();
         //操作
         String operation = method.getAnnotation(LogCustom.class).operation();
-        String operationType = method.getAnnotation(LogCustom.class).operationType().getContent();
+        String operationType = method.getAnnotation(LogCustom.class).operationType().getDescription();
         //用户名
         String userName = "userName";
         //请求参数
@@ -62,15 +61,7 @@ public class LogAround implements Ordered {
         try {
             ob = ((ProceedingJoinPoint) joinPoint).proceed();
             if (log.isInfoEnabled()) {
-                log.info("代码路径->" + methodDeclaringClass.toString() + "." + method.getName());
                 log.info(module + "->" + userName + "进行" + operation + "，操作类型：" + operationType);
-                if (sb.length() > 0) {
-                    log.info("请求参数->" + sb.toString());
-                } else {
-                    log.info("请求参数->无参数");
-                }
-                log.info("请求ip->" + ip);
-                log.info("请求路径->" + request.getRequestURI());
             }
 
         } catch (Throwable e) {
@@ -91,7 +82,6 @@ public class LogAround implements Ordered {
         return 5;
     }
 
-//  log.error("异常方法:{}异常代码:{}异常信息:{}参数:{}", joinPoint.getTarget().getClass().getName() + joinPoint.getSignature().getName(), e.getClass().getName(), e.getMessage(), sb);
 
 
 }

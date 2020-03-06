@@ -8,6 +8,7 @@ public class Table {
 	private String classRemark;
 	private List<Column> columns;
 	private List<Column> pkColumns;
+	private List<String> columnTypeList;
 	
 	public String getName() {
 		return name;
@@ -46,5 +47,11 @@ public class Table {
 		this.pkColumns = pkColumns;
 	}
 
+	public List<String> getColumnTypeList() {
+		return columnTypeList;
+	}
 
+	public void setColumnTypeList(List<String> columnTypeList) {
+		this.columnTypeList = columnTypeList;
+	}
 }

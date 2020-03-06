@@ -1,8 +1,12 @@
-package ${package}.entity;
+package ${package}.model.domain;
 
 import lombok.Data;
 import java.io.Serializable;
-import java.util.Date;
+<#list table.columnTypeList as tt>
+import ${tt};
+</#list>
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * ${table.classRemark}

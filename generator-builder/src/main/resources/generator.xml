@@ -15,7 +15,7 @@
      <entry key="BIT">Integer</entry>
      <entry key="TINYINT">Integer</entry>
      <entry key="NUMERIC">Double</entry>
-     <entry key="DECIMAL">java.math.BigDecimal</entry>
+     <entry key="DECIMAL">BigDecimal</entry>
      <entry key="BIGINT">Long</entry>
      <entry key="REAL">Double</entry>
      <entry key="DOUBLE">Double</entry>
@@ -23,10 +23,10 @@
      <entry key="SMALLINT">Integer</entry>
      <entry key="INTEGER">Integer</entry>
      <entry key="INT">Integer</entry>
-     <entry key="DATE">java.util.Date</entry>
-     <entry key="TIME">java.util.Date</entry>
-     <entry key="DATETIME">java.util.Date</entry>
-     <entry key="TIMESTAMP">java.util.Date</entry>
+     <entry key="DATE">Date</entry>
+     <entry key="TIME">Date</entry>
+     <entry key="DATETIME">Date</entry>
+     <entry key="TIMESTAMP">Date</entry>
 
      
      <entry key="jdbc.username">root</entry>

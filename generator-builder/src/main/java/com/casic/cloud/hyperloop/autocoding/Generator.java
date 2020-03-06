@@ -14,10 +14,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
+/**
+ * @author lvbaolin
+ */
 public class Generator {
     private Properties properties;
-    //获取当前日期
     private SimpleDateFormat sm_date = new SimpleDateFormat("yyyy年MM月dd日");
     private SimpleDateFormat sm_year = new SimpleDateFormat("yyyy年");
     private Connection conn;
@@ -55,15 +58,18 @@ public class Generator {
 
     }
 
-    //文件生成路径
-    private String buildPath = "E:\\work\\NEW\\cloud_govern\\generator-builder\\src\\main\\java\\out";
-    //表名单表生成传入表名,多表生成传入*
+    /**
+     *  文件生成路径
+     */
+    private String buildPath = "/Users/lvbaolin/work706/cloud_govern/generator-builder/src/main/java";
+    /**
+     * 表名单表生成传入表名,多表生成传入*
+     */
     private static String tableName = "*";
-    //创建人
     private static String userName = "lvbl";
 
     public static void main(String[] args) throws Exception {
-        Generator generator = new Generator();
+                Generator generator = new Generator();
         generator.gen(tableName, "", userName);
         System.out.println("模版文件生成完毕……");
     }
@@ -71,7 +77,6 @@ public class Generator {
 
     /**
      * <p>Discription:[生成映射文件和实体类]</p>
-     * Created on 2015年2月4日
      *
      * @param tableName 要声称映射文件和实体类的表名称
      * @throws Exception
@@ -151,6 +156,7 @@ public class Generator {
 
         ResultSet columnsResultSet = dmd.getColumns(catalog, schema == null ? "%" : schema, tableName, "%");
         List<Column> columnList = new ArrayList<Column>();
+        List<String> columnTypeList=new ArrayList<>();
         while (columnsResultSet.next()) {
             Column c = new Column();
             c.setLabel(columnsResultSet.getString("REMARKS"));
@@ -162,11 +168,22 @@ public class Generator {
             c.setLength(columnsResultSet.getInt("COLUMN_SIZE"));
             c.setDecimalDigits(columnsResultSet.getInt("DECIMAL_DIGITS"));
             c.setNullable(columnsResultSet.getBoolean("NULLABLE"));
+            switch (c.getType()){
+                case "BigDecimal" :
+                    columnTypeList.add("java.math.BigDecimal");
+                    break;
+                case "Date":
+                    columnTypeList.add("java.util.Date");
+                    break;
+                default:;
+            }
             columnList.add(c);
         }
+        //集合去重复
+        columnTypeList.stream().distinct().collect(Collectors.toList());
+        t.setColumnTypeList(columnTypeList);
         List<Column> pkColumnList = new ArrayList<Column>();
         ResultSet pkColumnResultSet = dmd.getPrimaryKeys(catalog, schema, tableName);
-
         while (pkColumnResultSet.next()) {
             Column c = new Column();
             String name = pkColumnResultSet.getString("COLUMN_NAME");

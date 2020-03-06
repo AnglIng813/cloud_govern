@@ -1,10 +1,10 @@
-package ${package}.mapper;
+package ${package}.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.lang.Integer;
 
-import ${package}.bean.${className};
+import ${package}.model.domain.${className};
 
 /**
  * ${table.classRemark}

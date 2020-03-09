@@ -1,23 +1,24 @@
 <div id="tablelist" class="systemPage ng-scope" ng-controller="limit-set">
 	<div class="wrapper-md ng-scope">
-		<div class="title">
 			<h1 class="m-n font-thin h4 text-black">限流配置</h1>
-		</div>
-		<div class="rightNav">
+		    <p></p>
+	</div>
+
+	<div class="panel panel-default">
+		<div class="panel-heading" style="padding: 8px;">
 			<button type="button" class="btnStyl" ui-sref="app.traffic-statistics">
 				<i class="iconfont icon-fanhui"></i>
 				返回首页
 			</button>
-			<button type="button" class="btnStyl">
-				<i class="iconfont icon-jiahao" data-toggle="modal" data-target="#myModaller"></i>
+			<button type="button" class="btnStyl" data-toggle="modal" data-target="#myModal">
+				<i class="iconfont icon-jiahao"></i>
 				创建
 			</button>
 		</div>
-	</div>
 
-	<div class="panel panel-default tableStyl">
-		<table class="table table-bordered table-striped table-hover tablecolor">
-			<thead class="theaddiy">
+        <div class="table-responsive">
+			<table class="table table-striped m-b-none">
+				<thead class="theaddiy">
 				<tr>
 					<th>镜像名称</th>
 					<th>服务名称</th>
@@ -25,16 +26,12 @@
 					<th>负载策略</th>
 					<th>操作</th>
 				</tr>
-			</thead>
-			<tbody class="tbodydiy">
-				<tr class="skipname">
-					<td class="skipname" style="width:300px !important">
-						mirror-1
-					</td>
+				</thead>
+				<tbody>
+				<tr>
+					<td>mirror-1</td>
 					<td>service-1</td>
-					<td>
-						轮洵
-					</td>
+					<td>轮洵</td>
 					<td>策略-1</td>
 					<td class="ud-manage">
 						<div class="btn-group">
@@ -53,14 +50,10 @@
 						</div>
 					</td>
 				</tr>
-				<tr class="skipname">
-					<td class="skipname" style="width:300px !important">
-						mirror-2
-					</td>
+				<tr>
+					<td>mirror-2</td>
 					<td>service-2</td>
-					<td>
-						轮洵
-					</td>
+					<td>轮洵</td>
 					<td>策略-2</td>
 					<td class="ud-manage">
 						<div class="btn-group">
@@ -79,14 +72,10 @@
 						</div>
 					</td>
 				</tr>
-				<tr class="skipname">
-					<td class="skipname" style="width:300px !important">
-						mirror-3
-					</td>
+				<tr>
+					<td>mirror-3</td>
 					<td>service-3</td>
-					<td>
-						轮洵
-					</td>
+					<td>轮洵</td>
 					<td>策略-3</td>
 					<td class="ud-manage">
 						<div class="btn-group">
@@ -105,9 +94,13 @@
 						</div>
 					</td>
 				</tr>
-			</tbody>
-		</table>
-		<!--<tm-pagination conf="paginationConf"></tm-pagination>-->
+				</tbody>
+			</table>
+			<tm-pagination conf="paginationConf"></tm-pagination>
+			<div class="panel-heading" style="padding: 8px;background: white;">
+				<div style="height: 40px;"></div>
+			</div>
+		</div>
 	</div>
 
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -352,4 +345,5 @@
 			</div>
 		</div>
 	</div>
+
 </div>

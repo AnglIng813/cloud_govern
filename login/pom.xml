@@ -125,37 +125,4 @@
         </plugins>
     </build>
 
-    <!-- 假如没有私服 ，则 本地仓库找不到，则访问中心仓库
-         假如有私服 ：访问顺序
-           首先访问本地仓库
-       本地仓库没有，则访问私服仓库
-       私服仓库也没有，则访问中心仓库
-     -->
-    <!-- 加载的是 第三方项目使用的jar包 -->
-    <repositories>
-        <repository>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>public</id>
-            <name>Public Repositories</name>
-            <url>http://10.11.200.130:8081/nexus/content/groups/public/</url>
-        </repository>
-    </repositories>
-
-    <!-- 加载的是maven生命周期插件的jar包 -->
-    <pluginRepositories>
-        <pluginRepository>
-            <releases>
-                <updatePolicy>never</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-            <id>public</id>
-            <name>Public Repositories</name>
-            <url>http://10.11.200.130:8081/nexus/content/groups/public/</url>
-        </pluginRepository>
-    </pluginRepositories>
-
 </project>

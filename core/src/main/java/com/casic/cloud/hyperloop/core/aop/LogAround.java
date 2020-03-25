@@ -1,9 +1,11 @@
 package com.casic.cloud.hyperloop.core.aop;
 
 
+import com.casic.cloud.hyperloop.common.utils.DateUtil;
+import com.casic.cloud.hyperloop.common.utils.IpUtil;
 import com.casic.cloud.hyperloop.core.annotation.LogCustom;
+import com.casic.cloud.hyperloop.core.constants.CoreConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * 自定义日志注解切面
@@ -37,49 +41,37 @@ public class LogAround implements Ordered {
     /**
      * 环绕通知
      *
-     * @param joinPoint
+     * @param prod
      * @return
      */
     @Around("logPointCut()")
-    public Object around(JoinPoint joinPoint) {
-        System.out.println("--------------------开始--------------------");
-        long start = System.currentTimeMillis();
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        //获取方法
+    public Object around(ProceedingJoinPoint prod) throws Throwable {
+        MethodSignature methodSignature = (MethodSignature) prod.getSignature();
         Method method = methodSignature.getMethod();
-        //模块名称
-        String module = method.getAnnotation(LogCustom.class).module();
-        //操作
-        String operation = method.getAnnotation(LogCustom.class).operation();
-        String operationType = method.getAnnotation(LogCustom.class).operationType().getDescription();
-        //用户名
-//        UserRes userRes=(UserRes) request.getAttribute("user");
-//        System.out.println(userRes.getUserId()+":"+userRes.getUserName());
-        String userName ="userName";
-        Object ob = null;
-        try {
-            ob = ((ProceedingJoinPoint) joinPoint).proceed();
-            if (log.isInfoEnabled()) {
-                log.info(module + "->" + userName + "进行" + operation + "，操作类型：" + operationType);
-            }
+        //拿到注解
+        LogCustom annotation = method.getAnnotation(LogCustom.class);
 
-        } catch (Throwable e) {
-            if (log.isInfoEnabled()) {
-                log.info("around " + joinPoint + "\tUse time : " + (System.currentTimeMillis() - start) + " ms with exception : " + e.getMessage());
-            }
-        } finally {
-            if (log.isInfoEnabled()) {
-                log.info("around " + joinPoint + "\tUse time : " + (System.currentTimeMillis() - start));
-            }
-            System.out.println("--------------------结束--------------------");
-        }
-        return ob;
+        //用户id
+        Long userId = (Long) request.getAttribute(CoreConstants.REQUEST_ATTR_USERID);
+        //模块code
+        Integer code = annotation.module().getCode();
+        //操作
+        Integer type = annotation.type().getCode();
+        //ip
+        String ip = IpUtil.getIpAddr(request);
+        //Date
+        Date now = DateUtil.convert2Date(LocalDateTime.now());
+
+        //TODO
+        //入库
+
+        log.info("userId={},code={},type={},ip={},now={}", userId, code, type, ip, now);
+        return prod.proceed();
     }
 
     @Override
     public int getOrder() {
         return 5;
     }
-
 
 }

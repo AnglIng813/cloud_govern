@@ -7,11 +7,10 @@ package com.casic.cloud.hyperloop.common.enums;
  */
 public interface CodeEnum {
 
-    String getValue();
-
     Integer getCode();
+
+    String getValue();
 
     String getDescription();
 
-    Integer getState();
 }

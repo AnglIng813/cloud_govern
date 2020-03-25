@@ -61,11 +61,11 @@ public class Generator {
     /**
      *  文件生成路径
      */
-    private String buildPath = "/Users/lvbaolin/work706/cloud_govern/generator-builder/src/main/java";
+    private String buildPath = "/Users/lvbaolin/work706/cloud_govern/generator-builder/src/main/java/com/casic/cloud/hyperloop";
     /**
      * 表名单表生成传入表名,多表生成传入*
      */
-    private static String tableName = "*";
+    private static String tableName = "oauth_client_details";
     private static String userName = "lvbl";
 
     public static void main(String[] args) throws Exception {

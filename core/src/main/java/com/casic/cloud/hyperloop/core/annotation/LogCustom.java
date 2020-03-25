@@ -1,6 +1,8 @@
 package com.casic.cloud.hyperloop.core.annotation;
 
+import com.casic.cloud.hyperloop.core.enums.ModuleEnum;
 import com.casic.cloud.hyperloop.core.enums.OperationEnum;
+import org.apache.ibatis.jdbc.Null;
 
 import java.lang.annotation.*;
 
@@ -9,34 +11,20 @@ import java.lang.annotation.*;
 @Documented
 public @interface LogCustom {
 
-
     /**
      * 模块
-     *
-     * @return
      */
-    String  module () default "";
-
-
-    /**
-     * 操作
-     *
-     * @return
-     */
-    String operation() default "";
+    ModuleEnum module () default ModuleEnum.test;
 
     /**
      * 操作类型
-     *
-     * @return
      */
-    OperationEnum operationType() default OperationEnum.ADD;
-
+    OperationEnum type() default OperationEnum.QUERY;
 
     /**
-     * @return
+     * 描述
      */
-    String description() default "";
+    String description() default "查询";
 
 
 

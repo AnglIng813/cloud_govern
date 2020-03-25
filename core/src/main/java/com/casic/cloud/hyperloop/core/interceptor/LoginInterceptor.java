@@ -55,7 +55,8 @@ public class LoginInterceptor implements HandlerInterceptor {
          * 2.提示前端状态码(当前采用第二种方式)
          *
          */
-        if (Objects.isNull(AuthorizationUtil.authorization(request, CoreConstants.REQUEST_ATTR_USERID))) {
+        Long userId = AuthorizationUtil.authorization(request, CoreConstants.REQUEST_ATTR_USERID);
+        if (Objects.isNull(userId)) {
             /*第一种
             String callback = request.getRequestURL() + "?" + request.getQueryString();
             if (StringUtils.isNotEmpty(callback)) {
@@ -75,6 +76,7 @@ public class LoginInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        request.setAttribute(CoreConstants.REQUEST_ATTR_USERID, userId);
         return true;
     }
 

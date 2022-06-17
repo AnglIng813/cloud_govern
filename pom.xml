@@ -32,7 +32,7 @@
         <govern-service-api>0.0.1-SNAPSHOT</govern-service-api>
 
 
-        <fastjson.version>1.2.51</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <swagger2.version>2.9.2</swagger2.version>
         <commons-io.version>2.4</commons-io.version>
         <pagehelper.version>1.2.12</pagehelper.version>
